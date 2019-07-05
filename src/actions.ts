@@ -1,10 +1,9 @@
 import { RouterLocation } from './location';
 
-// todo: заменить @@xxx
-export const LOCATION_CHANGED = '@@xxx/LOCATION_CHANGED';
+export const LOCATION_CHANGED = '@@direct-react-router/LOCATION_CHANGED';
 export type LOCATION_CHANGED = typeof LOCATION_CHANGED;
 
-export const HISTORY_METHOD_CALLED = '@@xxx/HISTORY_METHOD_CALLED';
+export const HISTORY_METHOD_CALLED = '@@direct-react-router/HISTORY_METHOD_CALLED';
 export type HISTORY_METHOD_CALLED = typeof HISTORY_METHOD_CALLED;
 
 export interface LocationChangedAction {

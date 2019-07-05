@@ -3,8 +3,7 @@ import { parse } from 'qs';
 
 import { matchPath, Params } from './matchPath';
 
-// todo: заменить xxx
-export const UNKNOWN_PATH = '@@xxx/UNKNOWN_PATH';
+export const UNKNOWN_PATH = '@@direct-react-router/UNKNOWN_PATH';
 
 export interface RouterConfig {
     routes: { [key: string]: string };
