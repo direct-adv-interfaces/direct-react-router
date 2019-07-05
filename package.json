@@ -1,0 +1,42 @@
+{
+  "name": "direct-react-router",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "prepublishOnly": "npm run build",
+    "build": "tsc",
+    "test": "mocha -r ts-node/register test/**/*.test.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/direct-adv-interfaces/direct-react-router.git"
+  },
+  "author": "dima117",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/direct-adv-interfaces/direct-react-router/issues"
+  },
+  "homepage": "https://github.com/direct-adv-interfaces/direct-react-router#readme",
+  "dependencies": {
+    "@types/history": "^4.7.2",
+    "@types/qs": "^6.5.3",
+    "@types/react": "^16.8.23",
+    "@types/react-redux": "^7.1.1",
+    "history": "^4.9.0",
+    "path-to-regexp": "^3.0.0",
+    "qs": "^6.7.0",
+    "react": "^16.8.6",
+    "react-redux": "^7.1.0",
+    "redux": "^4.0.1"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.5",
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "ts-node": "^8.0.1",
+    "typescript": "^3.2.4"
+  }
+}
