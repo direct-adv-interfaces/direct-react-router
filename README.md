@@ -13,10 +13,10 @@ import { RouterConfig } from 'direct-react-router';
 const history = createBrowserHistory();
 
 const config: RouterConfig = {
-    routes: {
-        PAGE1: '/p1/:login',
-        PAGE2: '/p2'
-    }
+    routes: [
+        { key: 'PAGE1', route: '/p1/:login' },
+        { key: 'PAGE2', route: '/p2' }
+    ]
 };
 ```
 
@@ -87,7 +87,15 @@ import { AdvancedLink } from 'direct-react-router';
 // ...
 
 render() {
-    return <AdvancedLink routeKey='PAGE1' params={{ login: 'moo' }} >page1</AdvancedLink>;
+    return (
+        <Provider store={store}>
+            <RouterContext.Provider value={{ config }}>
+                ...
+                <AdvancedLink routeKey='PAGE1' params={{ login: 'moo' }} >page1</AdvancedLink>
+                ...
+            </RouterContext.Provider>
+        </Provider>'
+    );
 }
 
 /*

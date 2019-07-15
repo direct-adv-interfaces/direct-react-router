@@ -29,7 +29,9 @@ class AdvancedLinkComponent extends BaseLinkComponent<AdvancedLinkOwnProps> {
         }
 
         const { routeKey, params }  = this.props;
-        const path = this.context.config.routes[routeKey];
+        const [path] = this.context.config.routes
+            .filter(r => r.key === routeKey)
+            .map(r => r.route); // todo: memo
 
         return generatePath(path, params);
     }

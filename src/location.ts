@@ -5,8 +5,13 @@ import { matchPath, Params } from './matchPath';
 
 export const UNKNOWN_PATH = '@@direct-react-router/UNKNOWN_PATH';
 
+export interface RouteInfo {
+    key: string;
+    route: string;
+}
+
 export interface RouterConfig {
-    routes: { [key: string]: string };
+    routes: RouteInfo[];
     // todo: basePath
 }
 
@@ -25,14 +30,14 @@ export function parseLocation(
 ): RouterLocation {
     const query = parse(search);
 
-    let location: RouterLocation | null = Object.keys(routes).reduce(
-        (prev: RouterLocation | null, key: string) => {
+    let location: RouterLocation | null = routes.reduce(
+        (prev: RouterLocation | null, r: RouteInfo) => {
             if (prev) {
                 return prev;
             }
 
             const matched = matchPath(pathname, {
-                path: routes[key]
+                path: r.route
             });
 
             return matched
@@ -40,7 +45,7 @@ export function parseLocation(
                       pathname,
                       search,
                       hash,
-                      key,
+                      key: r.key,
                       params: matched.params,
                       query
                   }
