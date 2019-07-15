@@ -55,7 +55,55 @@ const rootReducer = combineReducers({
 
 ### Ссылки
 
+```tsx
+import { Link } from 'direct-react-router';
+// ...
+
+render() {
+    return <Link href='/p1/test?str=xxx'>page1</Link>;
+}
+
+/*
+location: {
+    pathname: '/p1/test',
+    search: 'str=xxx',
+    hash: '',
+    key: 'PAGE1',
+    params: {
+        login: 'test'
+    },
+    query: {
+        str: 'xxx'
+    }
+}
+*/
+
+```
+
 ### Генерация ссылок по ключам
+
+```tsx
+import { AdvancedLink } from 'direct-react-router';
+// ...
+
+render() {
+    return <AdvancedLink routeKey='PAGE1' params={{ login: 'moo' }} >page1</AdvancedLink>;
+}
+
+/*
+location: {
+    pathname: '/p1/moo',
+    search: '',
+    hash: '',
+    key: 'PAGE1',
+    params: {
+        login: 'moo'
+    },
+    query: { }
+}
+*/
+
+```
 
 Внимание! проверьте, что нет [лишних перерисовок](https://ru.reactjs.org/docs/context.html#caveats)
 
@@ -91,5 +139,9 @@ const rootReducer = combineReducers({
 - [x] редюсер
 - [x] генерация ссылок по ключу????? (~~откуда брать конфиг? как вариант, можно коннектить каждую ссылку к стору и складывать конфиг в стор~~ конфиг передается через контекст)
 - [ ] синхронизация в обратную сторону?
+- [ ] exact
 - [ ] base path
 - [ ] приоритет роутов
+- [ ] обрубать `?` в query string
+- [ ] придумать, как задавать query string и hash для AdvancedLink
+- [ ] придумать, как задавать ссылку на ту же страницу, но с другими параметрами
