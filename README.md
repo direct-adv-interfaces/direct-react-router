@@ -14,8 +14,8 @@ const history = createBrowserHistory();
 
 const config: RouterConfig = {
     routes: [
-        { key: 'PAGE1', route: '/p1/:login' },
-        { key: 'PAGE2', route: '/p2' }
+        { key: 'PAGE1', route: '/p1' },
+        { key: 'PAGE2', route: '/p2/:login/count/:num' }
     ]
 };
 ```
@@ -60,21 +60,17 @@ import { Link } from 'direct-react-router';
 // ...
 
 render() {
-    return <Link href='/p1/test?str=xxx'>page1</Link>;
+    return <Link href='/p2/test/count/12?aa=1&bb=2#xxx'>page1</Link>;
 }
 
 /*
 location: {
-    pathname: '/p1/test',
-    search: 'str=xxx',
-    hash: '',
-    key: 'PAGE1',
-    params: {
-        login: 'test'
-    },
-    query: {
-        str: 'xxx'
-    }
+    pathname: '/p2/test/count/12',
+    search: '?aa=1&bb=2',
+    hash: '#xxx',
+    key: 'PAGE2',
+    params: { login: 'test', num: '12' },
+    query: { aa: '1', bb: '2' }
 }
 */
 
@@ -91,7 +87,7 @@ render() {
         <Provider store={store}>
             <RouterContext.Provider value={{ config }}>
                 ...
-                <AdvancedLink routeKey='PAGE1' params={{ login: 'moo' }} >page1</AdvancedLink>
+                <AdvancedLink routeKey='PAGE2' params={{ login: 'moo', num: '12' }} >page2</AdvancedLink>
                 ...
             </RouterContext.Provider>
         </Provider>'
@@ -100,13 +96,11 @@ render() {
 
 /*
 location: {
-    pathname: '/p1/moo',
+    pathname: '/p2/test/count/12',
     search: '',
     hash: '',
-    key: 'PAGE1',
-    params: {
-        login: 'moo'
-    },
+    key: 'PAGE2',
+    params: { login: 'moo', num: '12' },
     query: { }
 }
 */
@@ -125,31 +119,30 @@ location: {
 ## Достоинства
 
 - плоский список роутов
-- парсит ключи и параметры - не нужны спец. компоненты для условного рендеринга
+- настройки роутинга в одном месте
+- можно использовать по частям (например, только middleware)
+- парсит в адресах ключи и параметры, генерирует правильные url по ключам - не нужно завязываться в коде на конкретные url (в т.ч. не нужны спец. компоненты для условного рендеринга)
 - не нужна генерация действий в componentDidMount
 - можно использовать с react-router, а можно и не использовать)
 
 ## todo
-
-- [ ] отписка от событий history
-- [ ] exact
-
-## cases
-
-- SSR
-- рендеринг адресов в ссылках, включая basename
-
-## Подумать
 
 - [x] импорт компонента ссылки из корня
 - [x] устанавливать начальный path
 - [x] location по умолчанию
 - [x] редюсер
 - [x] генерация ссылок по ключу????? (~~откуда брать конфиг? как вариант, можно коннектить каждую ссылку к стору и складывать конфиг в стор~~ конфиг передается через контекст)
+- [x] обрубать `?` в query string
+- [x] приоритет роутов - задаем в виде массива
 - [ ] синхронизация в обратную сторону?
 - [ ] exact
 - [ ] base path
-- [ ] приоритет роутов
-- [ ] обрубать `?` в query string
 - [ ] придумать, как задавать query string и hash для AdvancedLink
 - [ ] придумать, как задавать ссылку на ту же страницу, но с другими параметрами
+- [ ] отписка от событий history
+- [ ] query-string options
+
+## cases
+
+- SSR
+- рендеринг адресов в ссылках, включая basename

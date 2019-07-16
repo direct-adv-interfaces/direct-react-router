@@ -1,9 +1,9 @@
 import { Location as HistoryLocation } from 'history';
-import { parse } from 'qs';
+import { parse, ParsedQuery } from 'query-string';
 
-import { matchPath, Params } from './matchPath';
+import { matchPath, Params, QueryParams } from './matchPath';
 
-export const UNKNOWN_PATH = '@@direct-react-router/UNKNOWN_PATH';
+export const UNKNOWN_ROUTE = '@@direct-react-router/UNKNOWN_ROUTE';
 
 export interface RouteInfo {
     key: string;
@@ -21,14 +21,14 @@ export interface RouterLocation {
     search: string;
     hash: string;
     params: Params;
-    query: Params;
+    query: QueryParams;
 }
 
 export function parseLocation(
     { routes }: RouterConfig,
     { pathname, search, hash }: HistoryLocation
 ): RouterLocation {
-    const query = parse(search);
+    const query: ParsedQuery<string> = parse(search);
 
     let location: RouterLocation | null = routes.reduce(
         (prev: RouterLocation | null, r: RouteInfo) => {
@@ -59,7 +59,7 @@ export function parseLocation(
             pathname,
             search,
             hash,
-            key: UNKNOWN_PATH,
+            key: UNKNOWN_ROUTE,
             params: {},
             query
         }

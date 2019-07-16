@@ -20,6 +20,10 @@ export interface Params {
     [extraProps: string]: string
 }
 
+export interface QueryParams {
+    [extraProps: string]: string | string[] | null | undefined;
+}
+
 export interface MatchedPath {
     path: string;
     url: string;
