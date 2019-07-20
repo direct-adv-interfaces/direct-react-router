@@ -38,7 +38,8 @@ export function parseLocation(
             }
 
             const matched = matchPath(pathname, {
-                path: r.route
+                path: r.route,
+                exact: true
             });
 
             return matched
