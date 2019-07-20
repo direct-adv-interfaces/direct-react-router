@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 
 import { BaseLinkComponent, BaseLinkOwnProps, BaseLinkDispatchProps, dispatchProps } from './BaseLinkComponent';
 
-import { Params } from '../matchPath';
+import { RouteArgs } from '../matchPath';
+import { generateUrl } from '../location';
 import { RouterConfig } from '..';
-import { generatePath } from '../generatePath';
 
-interface AdvancedLinkOwnProps {
-    routeKey: string;
-    params?: Params;
+
+interface AdvancedLinkOwnProps extends RouteArgs {
+
 }
 
 export interface RouterContextData {
@@ -23,21 +23,14 @@ class AdvancedLinkComponent extends BaseLinkComponent<AdvancedLinkOwnProps> {
 
     context!: React.ContextType<typeof RouterContext>
 
-    protected getDisplayLink(): string {
-        if (!this.context.config) {
+    protected getHref(): string {
+        const { config } = this.context;
+
+        if (!config) {
             throw new Error(); // todo: add error info
         }
 
-        const { routeKey, params }  = this.props;
-        const [path] = this.context.config.routes
-            .filter(r => r.key === routeKey)
-            .map(r => r.route); // todo: memo
-
-        return generatePath(path, params);
-    }
-
-    protected getNavigationLink(): string {
-        return this.getDisplayLink();
+        return generateUrl(config, this.props);
     }
 }
 

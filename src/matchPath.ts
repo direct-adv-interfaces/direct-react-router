@@ -24,6 +24,13 @@ export interface QueryParams {
     [extraProps: string]: string | string[] | null | undefined;
 }
 
+export interface RouteArgs {
+    routeKey: string;
+    params?: Params;
+    query?: QueryParams;
+    hash?: string;
+}
+
 export interface MatchedPath {
     path: string;
     url: string;

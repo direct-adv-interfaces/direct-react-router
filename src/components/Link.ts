@@ -7,11 +7,7 @@ interface LinkOwnProps {
 }
 
 class LinkComponent extends BaseLinkComponent<LinkOwnProps> {
-    protected getDisplayLink(): string {
-        return this.props.href;
-    }
-
-    protected getNavigationLink(): string {
+    protected getHref(): string {
         return this.props.href;
     }
 }

@@ -22,9 +22,7 @@ function isModifiedEvent(event: React.MouseEvent<HTMLElement>) {
 
 export abstract class BaseLinkComponent<T> extends React.Component<T & BaseLinkOwnProps & BaseLinkDispatchProps> {
 
-    protected abstract getDisplayLink(): string;
-
-    protected abstract getNavigationLink(): string;
+    protected abstract getHref(): string;
 
     handleClick = (event: React.MouseEvent<HTMLElement>) => {
         const { target, onClick, onNavigate } = this.props;
@@ -40,17 +38,18 @@ export abstract class BaseLinkComponent<T> extends React.Component<T & BaseLinkO
             !isModifiedEvent(event) // ignore clicks with modifier keys
         ) {
             event.preventDefault();
-            onNavigate(this.getNavigationLink());
+            onNavigate(this.getHref()); // todo: memo
         }
     };
 
     render() {
         const { target, className, children } = this.props;
+        const href = this.getHref();
 
         return (
             <a
                 className={className}
-                href={this.getDisplayLink()}
+                href={href}
                 target={target}
                 onClick={this.handleClick}
             >

@@ -1,7 +1,8 @@
 import { Location as HistoryLocation } from 'history';
-import { parse, ParsedQuery } from 'query-string';
+import { parse, ParsedQuery, stringify } from 'query-string';
 
-import { matchPath, Params, QueryParams } from './matchPath';
+import { matchPath, Params, QueryParams, RouteArgs } from './matchPath';
+import { generatePath } from './generatePath';
 
 export const UNKNOWN_ROUTE = '@@direct-react-router/UNKNOWN_ROUTE';
 
@@ -64,4 +65,35 @@ export function parseLocation(
             query
         }
     );
+}
+
+export function generateUrl(
+    { routes }: RouterConfig,
+    { routeKey, params, query, hash } : RouteArgs
+) {
+
+    const [route] = routes
+        .filter(r => r.key === routeKey)
+        .map(r => r.route); // todo: memo
+
+    if (!route) {
+        throw new Error('Unknown route key')
+    }    
+
+    let url = generatePath(route, params);
+
+    if (query) {
+        const qs = stringify(query);
+        qs && (url += '?' + qs);
+    }
+
+    if (hash) {
+        if (hash[0] !== '#') {
+            throw new Error('Hash must be started with #')
+        }
+
+        url += hash;
+    }
+
+    return url;
 }

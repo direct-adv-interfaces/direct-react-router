@@ -87,7 +87,14 @@ render() {
         <Provider store={store}>
             <RouterContext.Provider value={{ config }}>
                 ...
-                <AdvancedLink routeKey='PAGE2' params={{ login: 'moo', num: '12' }} >page2</AdvancedLink>
+                <AdvancedLink
+                    routeKey='PAGE2'
+                    params={{ login: 'test', num: '12' }}
+                    query={{ aa: '1', bb: '2' }}
+                    hash='#xxx'
+                >
+                    page2
+                </AdvancedLink>
                 ...
             </RouterContext.Provider>
         </Provider>'
@@ -95,13 +102,15 @@ render() {
 }
 
 /*
+href:
+    /p2/test/count/12?aa=1&bb=2#xxx
 location: {
     pathname: '/p2/test/count/12',
-    search: '',
-    hash: '',
+    search: '?aa=1&bb=2',
+    hash: '#xxx',
     key: 'PAGE2',
-    params: { login: 'moo', num: '12' },
-    query: { }
+    params: { login: 'test', num: '12' },
+    query: { aa: '1', bb: '2' }
 }
 */
 
@@ -134,15 +143,21 @@ location: {
 - [x] генерация ссылок по ключу????? (~~откуда брать конфиг? как вариант, можно коннектить каждую ссылку к стору и складывать конфиг в стор~~ конфиг передается через контекст)
 - [x] обрубать `?` в query string
 - [x] приоритет роутов - задаем в виде массива
-- [ ] синхронизация в обратную сторону?
+- [x] придумать, как задавать query string и hash для AdvancedLink
 - [ ] exact
 - [ ] base path
-- [ ] придумать, как задавать query string и hash для AdvancedLink
-- [ ] придумать, как задавать ссылку на ту же страницу, но с другими параметрами
-- [ ] отписка от событий history
+- [ ] выключать spa переходы через пропсы
 - [ ] query-string options
 
-## cases
+## подумать
+
+- [ ] проверить, что приходит в action, если адрес - url encoded
+- [ ] подумать, нужно ли кодировать hash при генерации url
+- [ ] проверить, как ведет себя звездочка в роутах
+- [ ] когда происходит отписка от событий history
+- [ ] синхронизация в обратную сторону (store => url)?
+
+## сделать примеры
 
 - SSR
 - рендеринг адресов в ссылках, включая basename
