@@ -60,7 +60,8 @@ import { Link } from 'direct-react-router';
 // ...
 
 render() {
-    return <Link href='/p2/test/count/12?aa=1&bb=2#xxx'>page1</Link>;
+    const href = '/p2/test/count/12?aa=1&bb=2#xxx';
+    return <Link href={href}>page1</Link>;
 }
 
 /*
@@ -97,7 +98,7 @@ render() {
                 </AdvancedLink>
                 ...
             </RouterContext.Provider>
-        </Provider>'
+        </Provider>
     );
 }
 
