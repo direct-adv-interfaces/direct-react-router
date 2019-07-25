@@ -2,8 +2,6 @@ import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import { generateUrl, RouterConfig } from '../src/location';
 
-// совпадает несколько роутов - падает с ошибкой
-
 describe('generateUrl', () => {
     it('генерируется url без параметров', () => {
         const config: RouterConfig = {

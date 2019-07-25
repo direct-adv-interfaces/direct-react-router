@@ -90,4 +90,18 @@ describe('parseLocation', () => {
         expect(result.query.aa).is.equal('1');
         expect(result.params).is.empty;
     });
+
+    it('error on ambigous routes match', () => {
+        const location = createLocation('/mimi/test');
+        const config: RouterConfig = {
+            routes: { 
+                t1: '/mimi/test', 
+                t2: '/mimi/:name', 
+            }
+        };
+
+        expect(() => {
+            parseLocation(config, location);
+        }).throws('Ambiguous route match: t1, t2');
+    });
 });

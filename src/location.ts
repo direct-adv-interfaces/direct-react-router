@@ -49,7 +49,7 @@ export function parseLocation(
     );
 
     if (others.length) {
-        throw new Error(`ambiguous routes matches: ${others.map(x => x.key).join(', ')}`)
+        throw new Error(`Ambiguous route match: ${[location, ...others].map(x => x.key).join(', ')}`)
     }
 
     return (
