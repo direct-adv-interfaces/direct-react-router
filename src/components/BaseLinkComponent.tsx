@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { callHistoryMethod, HistoryMethodCalledAction } from '../actions';
+import { RouterConfig } from '../location';
 
 export interface BaseLinkDispatchProps {
     onNavigate: (url: string) => HistoryMethodCalledAction;
@@ -20,7 +21,17 @@ function isModifiedEvent(event: React.MouseEvent<HTMLElement>) {
     return !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
 }
 
+export interface RouterContextData {
+    config?: RouterConfig;
+    basename?: string
+}
+
+export const RouterContext = React.createContext<RouterContextData>({});
+
 export abstract class BaseLinkComponent<T> extends React.Component<T & BaseLinkOwnProps & BaseLinkDispatchProps> {
+    static contextType = RouterContext;
+
+    context!: React.ContextType<typeof RouterContext>
 
     protected abstract getHref(): string;
 
