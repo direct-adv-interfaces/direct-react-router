@@ -13,10 +13,10 @@ import { RouterConfig } from 'direct-react-router';
 const history = createBrowserHistory();
 
 const config: RouterConfig = {
-    routes: [
-        { key: 'PAGE1', route: '/p1' },
-        { key: 'PAGE2', route: '/p2/:login/count/:num' }
-    ]
+    routes: {
+        PAGE1: '/p1',
+        PAGE2: '/p2/:login/count/:num'
+    }
 };
 ```
 
@@ -140,7 +140,7 @@ store.dispatch(changeLocation(parsed));
 
 ## Достоинства
 
-- плоский список роутов → всегда `exact === true` → порядок роутов не важен
+- плоский список роутов → всегда `exact === true` → порядок роутов не важен (если совпадает несколько → ошибка)
 - настройки роутинга в одном месте
 - можно использовать по частям (например, только middleware)
 - парсит в адресах ключи и параметры, генерирует правильные url по ключам - не нужно завязываться в коде на конкретные url (в т.ч. не нужны спец. компоненты для условного рендеринга)
@@ -157,13 +157,14 @@ store.dispatch(changeLocation(parsed));
 - [x] обрубать `?` в query string
 - [x] приоритет роутов - задаем в виде массива
 - [x] придумать, как задавать query string и hash для AdvancedLink
-- [ ] exact
+- [х] exact
 - [ ] base path
 - [ ] выключать spa переходы через пропсы
 - [ ] query-string options
 
 ## подумать
 
+- [ ] задавать тип ключа
 - [ ] проверить, что приходит в action, если адрес - url encoded
 - [ ] подумать, нужно ли кодировать hash при генерации url
 - [ ] проверить, как ведет себя звездочка в роутах

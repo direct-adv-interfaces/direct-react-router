@@ -6,13 +6,8 @@ import { generatePath } from './generatePath';
 
 export const UNKNOWN_ROUTE = '@@direct-react-router/UNKNOWN_ROUTE';
 
-export interface RouteInfo {
-    key: string;
-    route: string;
-}
-
 export interface RouterConfig {
-    routes: RouteInfo[];
+    routes: { [key: string]: string };
     // todo: basePath
 }
 
@@ -31,30 +26,31 @@ export function parseLocation(
 ): RouterLocation {
     const query: ParsedQuery<string> = parse(search);
 
-    let location: RouterLocation | null = routes.reduce(
-        (prev: RouterLocation | null, r: RouteInfo) => {
-            if (prev) {
-                return prev;
-            }
-
+    let [location, ...others]: RouterLocation[] = Object.keys(routes).reduce(
+        (prev: RouterLocation[], key: string) => {
             const matched = matchPath(pathname, {
-                path: r.route,
+                path: routes[key],
                 exact: true
             });
 
-            return matched
-                ? {
-                      pathname,
-                      search,
-                      hash,
-                      key: r.key,
-                      params: matched.params,
-                      query
-                  }
-                : null;
+            matched &&
+                prev.push({
+                    pathname,
+                    search,
+                    hash,
+                    key,
+                    params: matched.params,
+                    query
+                });
+
+            return prev;
         },
-        null
+        []
     );
+
+    if (others.length) {
+        throw new Error(`ambiguous routes matches: ${others.map(x => x.key).join(', ')}`)
+    }
 
     return (
         location || {
@@ -70,16 +66,13 @@ export function parseLocation(
 
 export function generateUrl(
     { routes }: RouterConfig,
-    { routeKey, params, query, hash } : RouteArgs
+    { routeKey, params, query, hash }: RouteArgs
 ) {
-
-    const [route] = routes
-        .filter(r => r.key === routeKey)
-        .map(r => r.route); // todo: memo
+    const route = routes[routeKey];
 
     if (!route) {
-        throw new Error('Unknown route key')
-    }    
+        throw new Error('Unknown route key');
+    }
 
     let url = generatePath(route, params);
 
@@ -90,7 +83,7 @@ export function generateUrl(
 
     if (hash) {
         if (hash[0] !== '#') {
-            throw new Error('Hash must be started with #')
+            throw new Error('Hash must be started with #');
         }
 
         url += hash;

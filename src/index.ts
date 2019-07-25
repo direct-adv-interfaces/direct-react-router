@@ -7,7 +7,7 @@ export {
     LocationChangedAction
 } from './actions';
 
-export { RouterConfig, RouterLocation, UNKNOWN_ROUTE } from './location';
+export { parseLocation, RouterConfig, RouterLocation, UNKNOWN_ROUTE } from './location';
 
 export { createRoutingMiddleware } from './middleware';
 

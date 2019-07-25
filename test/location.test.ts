@@ -8,7 +8,7 @@ describe('parseLocation', () => {
     it('parse route key', () => {
         const location = createLocation('/xxx/123');
         const config: RouterConfig = {
-            routes: [{ key: 'aaa', route: '/xxx/:id' }]
+            routes: { aaa: '/xxx/:id' }
         };
 
         const result: RouterLocation = parseLocation(config, location);
@@ -19,7 +19,7 @@ describe('parseLocation', () => {
     it('parse url parts', () => {
         const location = createLocation('/yyy/123?aa=1&bb=2#qqq');
         const config: RouterConfig = {
-            routes: [{ key: 'bbb', route: '/yyy/:id' }]
+            routes: { bbb: '/yyy/:id' }
         };
 
         const result: RouterLocation = parseLocation(config, location);
@@ -32,7 +32,7 @@ describe('parseLocation', () => {
     it('parse empty search part', () => {
         const location = createLocation('/zzz/444?#qqq');
         const config: RouterConfig = {
-            routes: [{ key: 'ccc', route: '/yyy/:id' }]
+            routes: { ccc: '/yyy/:id' }
         };
 
         const result: RouterLocation = parseLocation(config, location);
@@ -43,7 +43,7 @@ describe('parseLocation', () => {
     it('parse empty hash part', () => {
         const location = createLocation('/aaa/555?a=2#');
         const config: RouterConfig = {
-            routes: [{ key: 'ddd', route: '/aaa/:id' }]
+            routes: { ddd: '/aaa/:id' }
         };
 
         const result: RouterLocation = parseLocation(config, location);
@@ -54,7 +54,7 @@ describe('parseLocation', () => {
     it('parse url params', () => {
         const location = createLocation('/bb/12/cc/cow');
         const config: RouterConfig = {
-            routes: [{ key: 'eee', route: '/bb/:num/cc/:alias' }]
+            routes: { eee: '/bb/:num/cc/:alias' }
         };
 
         const result: RouterLocation = parseLocation(config, location);
@@ -66,7 +66,7 @@ describe('parseLocation', () => {
     it('parse query string', () => {
         const location = createLocation('/bb/12/cc/cow?aa=1&bb=2#xxx');
         const config: RouterConfig = {
-            routes: [{ key: 'eee', route: '/bb/:num/cc/:alias' }]
+            routes: { eee: '/bb/:num/cc/:alias' }
         };
 
         const result: RouterLocation = parseLocation(config, location);
@@ -78,7 +78,7 @@ describe('parseLocation', () => {
     it('parse unknown route', () => {
         const location = createLocation('/asfk/jfka/jgfka?aa=1#www');
         const config: RouterConfig = {
-            routes: [{ key: 'eee', route: '/bb' }]
+            routes: { eee: '/bb' }
         };
 
         const result: RouterLocation = parseLocation(config, location);
