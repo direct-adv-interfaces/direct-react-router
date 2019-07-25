@@ -126,6 +126,18 @@ location: {
 - Для адресной строки — указать `basename` в `createBrowserHistory`.
 - Для генерации ссылок — пробросить `basename` через контекст.
 
+### Генерировать action при открытии страницы
+
+Middleware генерирует экшены при изменении url в адресной строке. При открытии страницы экшен с текущим url по умолчанию не генерируется. Если он вам нужен, сгенерируйте его руками.
+
+```ts
+import { parseLocation, changeLocation } from 'direct-react-router';
+// ...
+
+const routeLoaction: RouterLocation = parseLocation(config, history.location);
+store.dispatch(changeLocation(parsed));
+```
+
 ## Достоинства
 
 - плоский список роутов → всегда `exact === true` → порядок роутов не важен
