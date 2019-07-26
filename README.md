@@ -80,7 +80,7 @@ location: {
 ### Генерация ссылок по ключам
 
 ```tsx
-import { AdvancedLink } from 'direct-react-router';
+import { AdvancedLink, RouterContext } from 'direct-react-router';
 // ...
 
 render() {
@@ -126,6 +126,30 @@ location: {
 - Для адресной строки — указать `basename` в `createBrowserHistory`.
 - Для генерации ссылок — пробросить `basename` через контекст.
 
+```tsx
+import { Link, RouterContext } from 'direct-react-router';
+// ...
+
+render() {
+    return (
+        <RouterContext.Provider value={{ basename: 'your/base/path' }}>
+            ...
+            <Link href='/test/xxx' />
+            ...
+        </RouterContext.Provider>
+    );
+}
+
+/*
+href:
+    /your/base/path/test/xxx
+location: {
+    pathname: '/test/xxx',
+    ...
+}
+*/
+```
+
 ### Генерировать action при открытии страницы
 
 Middleware генерирует экшены при изменении url в адресной строке. При открытии страницы экшен с текущим url по умолчанию не генерируется. Если он вам нужен, сгенерируйте его руками.
@@ -157,7 +181,7 @@ store.dispatch(changeLocation(parsed));
 - [x] обрубать `?` в query string
 - [x] приоритет роутов - задаем в виде массива
 - [x] придумать, как задавать query string и hash для AdvancedLink
-- [х] exact
+- [x] exact
 - [ ] base path
 - [ ] выключать spa переходы через пропсы
 - [ ] query-string options
