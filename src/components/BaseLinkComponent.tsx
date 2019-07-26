@@ -3,6 +3,10 @@ import React from 'react';
 import { callHistoryMethod, HistoryMethodCalledAction } from '../actions';
 import { RouterConfig } from '../location';
 
+function normalizeHref(href?: string): string {
+    return href ? href.replace(/^\//, '') : '';
+}
+
 export interface BaseLinkDispatchProps {
     onNavigate: (url: string) => HistoryMethodCalledAction;
 }
@@ -53,9 +57,18 @@ export abstract class BaseLinkComponent<T> extends React.Component<T & BaseLinkO
         }
     };
 
+    getRenderHref() {
+        const href = normalizeHref(this.getHref());
+        const basename = normalizeHref(this.context.basename);
+
+        return basename
+            ? `/${basename}/${href}`
+            : `/${href}`;
+    }
+
     render() {
         const { target, className, children } = this.props;
-        const href = this.getHref();
+        const href = this.getRenderHref();
 
         return (
             <a
