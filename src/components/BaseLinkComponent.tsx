@@ -12,14 +12,9 @@ export interface BaseLinkDispatchProps {
 }
 
 export const dispatchProps: BaseLinkDispatchProps = {
-    onNavigate: (href: string): HistoryMethodCalledAction => callHistoryMethod(href)
-}
-
-export interface BaseLinkOwnProps {
-    target?: string;
-    className?: string;
-    onClick?: (event: React.MouseEvent<HTMLElement>) => void;
-}
+    onNavigate: (href: string): HistoryMethodCalledAction =>
+        callHistoryMethod(href)
+};
 
 function isModifiedEvent(event: React.MouseEvent<HTMLElement>) {
     return !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
@@ -27,19 +22,25 @@ function isModifiedEvent(event: React.MouseEvent<HTMLElement>) {
 
 export interface RouterContextData {
     config?: RouterConfig;
-    basename?: string
+    basename?: string;
 }
 
 export const RouterContext = React.createContext<RouterContextData>({});
 
+export type BaseLinkOwnProps =
+    React.DetailedHTMLProps<
+        React.AnchorHTMLAttributes<HTMLAnchorElement>,
+        HTMLAnchorElement
+    >;
+
 export abstract class BaseLinkComponent<T> extends React.Component<T & BaseLinkOwnProps & BaseLinkDispatchProps> {
     static contextType = RouterContext;
 
-    context!: React.ContextType<typeof RouterContext>
+    context!: React.ContextType<typeof RouterContext>;
 
     protected abstract getHref(): string;
 
-    handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
         const { target, onClick, onNavigate } = this.props;
 
         if (onClick) {
@@ -61,20 +62,17 @@ export abstract class BaseLinkComponent<T> extends React.Component<T & BaseLinkO
         const href = normalizeHref(this.getHref());
         const basename = normalizeHref(this.context.basename);
 
-        return basename
-            ? `/${basename}/${href}`
-            : `/${href}`;
+        return basename ? `/${basename}/${href}` : `/${href}`;
     }
 
     render() {
-        const { target, className, children } = this.props;
+        const { children } = this.props;
         const href = this.getRenderHref();
 
         return (
             <a
-                className={className}
+                {...this.props}
                 href={href}
-                target={target}
                 onClick={this.handleClick}
             >
                 {children}

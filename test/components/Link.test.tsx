@@ -17,10 +17,6 @@ function render2(node: React.ReactNode) {
     return { link, store };
 }
 
-// базовый путь
-// есть провайдер, но пустой basename
-// нормализация пути
-
 describe('Link', () => {
     it('proper href', () => {
         const { link } = render2(<Link href='/aaa'>111</Link>);
@@ -56,4 +52,18 @@ describe('Link', () => {
 
         expect(action.url).is.eq('/ccc');
     });
+
+    it('proper attributes', () => {
+        const { link } = render2(<Link 
+            href='/aaa' 
+            className='action' 
+            id='123' 
+            dangerouslySetInnerHTML={{
+                __html: '<strong>123</strong>'
+            }}
+            target='fdasgsgs' />);
+
+        expect(link.html()).is.eq('/aaa');
+    });
+
 });

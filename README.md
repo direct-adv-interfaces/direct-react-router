@@ -182,7 +182,8 @@ store.dispatch(changeLocation(parsed));
 - [x] приоритет роутов - задаем в виде массива
 - [x] придумать, как задавать query string и hash для AdvancedLink
 - [x] exact
-- [ ] base path
+- [x] base path
+- [x] атрибуты ссылки
 - [ ] выключать spa переходы через пропсы
 - [ ] query-string options
 
