@@ -3,9 +3,31 @@ import React from 'react';
 import { callHistoryMethod, HistoryMethodCalledAction } from '../actions';
 import { RouterConfig } from '../location';
 
+// helpers
 function normalizeHref(href?: string): string {
     return href ? href.replace(/^\//, '') : '';
 }
+
+function isModifiedEvent(event: React.MouseEvent<HTMLElement>) {
+    return !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
+}
+
+// context
+export interface RouterContextData {
+    config?: RouterConfig;
+    basename?: string;
+}
+
+export const RouterContext = React.createContext<RouterContextData>({});
+
+// component props
+export type BaseLinkOwnProps = {
+    target?: string;
+    className?: string;
+    attrs?: any;
+    dangerouslySetInnerHTML?: { __html: string };
+    onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+};
 
 export interface BaseLinkDispatchProps {
     onNavigate: (url: string) => HistoryMethodCalledAction;
@@ -16,24 +38,9 @@ export const dispatchProps: BaseLinkDispatchProps = {
         callHistoryMethod(href)
 };
 
-function isModifiedEvent(event: React.MouseEvent<HTMLElement>) {
-    return !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
-}
-
-export interface RouterContextData {
-    config?: RouterConfig;
-    basename?: string;
-}
-
-export const RouterContext = React.createContext<RouterContextData>({});
-
-export type BaseLinkOwnProps =
-    React.DetailedHTMLProps<
-        React.AnchorHTMLAttributes<HTMLAnchorElement>,
-        HTMLAnchorElement
-    >;
-
-export abstract class BaseLinkComponent<T> extends React.Component<T & BaseLinkOwnProps & BaseLinkDispatchProps> {
+export abstract class BaseLinkComponent<T> extends React.Component<
+    T & BaseLinkOwnProps & BaseLinkDispatchProps
+> {
     static contextType = RouterContext;
 
     context!: React.ContextType<typeof RouterContext>;
@@ -66,13 +73,13 @@ export abstract class BaseLinkComponent<T> extends React.Component<T & BaseLinkO
     }
 
     render() {
-        const { children } = this.props;
+        const { attrs, children, dangerouslySetInnerHTML } = this.props;
         const href = this.getRenderHref();
 
         return (
             <a
-                {...this.props}
-                href={href}
+                {...attrs}
+                {...{ href, dangerouslySetInnerHTML }}
                 onClick={this.handleClick}
             >
                 {children}
