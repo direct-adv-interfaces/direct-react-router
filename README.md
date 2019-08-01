@@ -129,10 +129,16 @@ location: {
 ```tsx
 import { Link, RouterContext } from 'direct-react-router';
 // ...
+const basename = 'your/base/path';
+
+// учитываем basename при обработке url
+const history = createBrowserHistory({ basename });
+
 
 render() {
     return (
-        <RouterContext.Provider value={{ basename: 'your/base/path' }}>
+        // учитываем basename при генерации url для ссылок
+        <RouterContext.Provider value={{ basename }}>
             ...
             <Link href='/test/xxx' />
             ...
