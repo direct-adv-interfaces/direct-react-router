@@ -24,7 +24,7 @@ export const RouterContext = React.createContext<RouterContextData>({});
 export type BaseLinkOwnProps = {
     target?: string;
     className?: string;
-    attrs?: any;
+    attrs?: { [key: string]: string | number };
     dangerouslySetInnerHTML?: { __html: string };
     onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
 };
@@ -73,13 +73,18 @@ export abstract class BaseLinkComponent<T> extends React.Component<
     }
 
     render() {
-        const { attrs, children, dangerouslySetInnerHTML } = this.props;
+        const { attrs, children, className, dangerouslySetInnerHTML, target } = this.props;
         const href = this.getRenderHref();
 
         return (
             <a
                 {...attrs}
-                {...{ href, dangerouslySetInnerHTML }}
+                {...{ 
+                    href, 
+                    className, 
+                    target, 
+                    dangerouslySetInnerHTML 
+                }}
                 onClick={this.handleClick}
             >
                 {children}
