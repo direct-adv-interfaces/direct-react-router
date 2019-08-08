@@ -41,18 +41,6 @@ describe('Link', () => {
             expect(link.getDOMNode().getAttribute('href')).is.eq('/aaa');
         });
 
-        it('proper action', () => {
-            const { link, store } = render2(<Link href="/aaa" />);
-
-            link.simulate('click', { button: 0 });
-            const [action] = store.getActions();
-
-            expect(action.type).is.eq(
-                '@@direct-react-router/HISTORY_METHOD_CALLED'
-            );
-            expect(action.url).is.eq('/aaa');
-        });
-
         it('proper attributes', () => {
             const { link } = render2(
                 <Link
@@ -62,7 +50,7 @@ describe('Link', () => {
                     attrs={{
                         id: 123,
                         xxx: 'yyy',
-                        'aria-label': 'test'
+                        'aria-label': 'test1'
                     }}
                 />
             );
@@ -101,6 +89,125 @@ describe('Link', () => {
             const [action] = store.getActions();
 
             expect(action.url).is.eq('/ccc');
+        });
+    });
+
+    describe('click handler', () => {
+        it('proper action', () => {
+            const { link, store } = render2(<Link href="/aaa" />);
+
+            link.simulate('click', { button: 0 });
+            const [action] = store.getActions();
+
+            expect(action.type).is.eq(
+                '@@direct-react-router/HISTORY_METHOD_CALLED'
+            );
+            expect(action.url).is.eq('/aaa');
+        });
+
+        it('handler runs on click', () => {
+            let event: any;
+            const { link } = render2(<Link 
+                href="/aaa" 
+                onClick={(e) => { event = e }} />);
+    
+            link.simulate('click', { button: 0, clientX: 12, clientY: 14 });
+            
+            expect(event.button).is.eq(0);
+            expect(event.clientX).is.eq(12);
+            expect(event.clientY).is.eq(14);
+        });
+
+        it('action not fired when preventDefault is called', () => {
+            const { link, store } = render2(<Link 
+                href="/aaa" 
+                onClick={(e) => { e.preventDefault(); }} />);
+    
+            link.simulate('click', { button: 0 });
+            const actions = store.getActions();
+            
+            expect(actions).is.empty;
+        });
+
+        it('fire action on left button click', () => {
+            const { link, store } = render2(<Link href="/aaa0" />);
+
+            link.simulate('click', { button: 0 });
+            const [action] = store.getActions();
+
+            expect(action.url).is.eq('/aaa0');
+        });
+
+        it('don\'t fire action on middle button click', () => {
+            const { link, store } = render2(<Link href="/aaa1" />);
+
+            link.simulate('click', { button: 1 });
+            const actions = store.getActions();
+
+            expect(actions).is.empty;
+        });
+
+        it('don\'t fire action on right button click', () => {
+            const { link, store } = render2(<Link href="/aaa2" />);
+
+            link.simulate('click', { button: 2 });
+            const actions = store.getActions();
+
+            expect(actions).is.empty;
+        });
+
+        it('don\'t fire action when link has target', () => {
+            const { link, store } = render2(<Link href="/bbb" target="zzzz" />);
+
+            link.simulate('click', { button: 0 });
+            const actions = store.getActions();
+
+            expect(actions).is.empty;
+        });
+
+        it('fire action when link target is \'_self\'', () => {
+            const { link, store } = render2(<Link href="/ccc" target="_self" />);
+
+            link.simulate('click', { button: 0 });
+            const [action] = store.getActions();
+
+            expect(action.url).is.eq('/ccc');
+        });
+
+        it('don\'t fire action when Alt key is pressed', () => {
+            const { link, store } = render2(<Link href="/vvv1" />);
+
+            link.simulate('click', { button: 0, altKey: true });
+            const actions = store.getActions();
+
+            expect(actions).is.empty;
+        });
+
+        it('don\'t fire action when Ctrl key is pressed', () => {
+            const { link, store } = render2(<Link href="/vvv2" />);
+
+            link.simulate('click', { button: 0, ctrlKey: true });
+            const actions = store.getActions();
+
+            expect(actions).is.empty;
+        });
+
+        it('don\'t fire action when Shift key is pressed', () => {
+            const { link, store } = render2(<Link href="/vvv3" />);
+
+            link.simulate('click', { button: 0, shiftKey: true });
+            const actions = store.getActions();
+
+            expect(actions).is.empty;
+        });
+
+        it('don\'t fire action when meta key is pressed', () => {
+            const { link, store } = render2(<Link href="/vvv4" />);
+
+            link.simulate('click', { button: 0, metaKey: true });
+            const actions = store.getActions();
+
+            expect(actions).is.empty;
         });
     });
 });
