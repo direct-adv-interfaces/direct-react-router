@@ -14,7 +14,7 @@ class AdvancedLinkComponent extends BaseLinkComponent<AdvancedLinkOwnProps> {
         const { config } = this.context;
 
         if (!config) {
-            throw new Error(); // todo: add error info
+            throw new Error('Routes configuration is not specified');
         }
 
         return generateUrl(config, this.props);
