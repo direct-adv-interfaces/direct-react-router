@@ -1,7 +1,7 @@
 import { Location as HistoryLocation } from 'history';
 import { parse, ParsedQuery, stringify } from 'query-string';
 
-import { matchPath, Params, QueryParams, RouteArgs } from './matchPath';
+import { matchPath, MatchedParams, QueryParams, RouteArgs } from './matchPath';
 import { generatePath } from './generatePath';
 
 export const UNKNOWN_ROUTE = '@@direct-react-router/UNKNOWN_ROUTE';
@@ -16,7 +16,7 @@ export interface RouterLocation {
     pathname: string;
     search: string;
     hash: string;
-    params: Params;
+    params: MatchedParams;
     query: QueryParams;
 }
 

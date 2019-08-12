@@ -16,8 +16,12 @@ export interface Options {
     sensitive?: boolean;
 }
 
-export interface Params {
+export interface MatchedParams {
     [extraProps: string]: string
+}
+
+export interface RouteParams {
+    [extraProps: string]: string[] | string
 }
 
 export interface QueryParams {
@@ -26,7 +30,7 @@ export interface QueryParams {
 
 export interface RouteArgs {
     routeKey: string;
-    params?: Params;
+    params?: RouteParams;
     query?: QueryParams;
     hash?: string;
 }
@@ -35,7 +39,7 @@ export interface MatchedPath {
     path: string;
     url: string;
     isExact: boolean;
-    params: Params;
+    params: MatchedParams;
 }
 
 interface CompileOptions {

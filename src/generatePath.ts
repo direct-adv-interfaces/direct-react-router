@@ -1,5 +1,5 @@
 import pathToRegexp, { PathFunction } from 'path-to-regexp';
-import { Params } from './matchPath';
+import { RouteParams } from './matchPath';
 
 const cache: { [key: string]: PathFunction<object> } = {};
 const cacheLimit = 10000;
@@ -21,6 +21,6 @@ function compilePath(path: string): PathFunction<object> {
 /**
  * Public API for generating a URL pathname from a path and parameters.
  */
-export function generatePath(path: string = '/', params: Params = {}): string {
+export function generatePath(path: string = '/', params: RouteParams = {}): string {
     return path === '/' ? path : compilePath(path)(params);
 }

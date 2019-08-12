@@ -104,4 +104,17 @@ describe('generateUrl', () => {
 
         expect(result).is.equal('/xy?a%20b=c%20d');
     });
+
+    it('generate url with path parameter ', () => {
+        const config: RouterConfig = {
+            routes: { sss: '/xy/:path*' }
+        };
+
+        const result = generateUrl(config, {
+            routeKey: 'sss',
+            params: { path: ['b', 'c', 'd'] }
+        });
+
+        expect(result).is.equal('/xy/b/c/d');
+    });
 });
