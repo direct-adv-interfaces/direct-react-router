@@ -1,5 +1,9 @@
 # direct-react-router
 
+[![NPM version][npm-image]][npm-url]
+[![Build status][travis-image]][travis-url]
+[![License][license-image]][license-url]
+
 ## Достоинства
 
 - **redux first** → не зависит от жизненного цикла компонентов → нет сайд-эффектов в компонентах (например, больше не нужна генерация действий в `componentDidMount`)
@@ -225,7 +229,13 @@ store.dispatch(changeLocation(parsed));
 - [ ] когда происходит отписка от событий history
 - [ ] синхронизация в обратную сторону (store => url)?
 
-## сделать примеры
+## License
 
-- SSR
-- рендеринг адресов в ссылках, включая basename
+MIT
+
+[npm-image]: https://img.shields.io/npm/v/direct-react-router.svg?style=flat
+[npm-url]: https://npmjs.org/package/direct-react-router
+[travis-image]: https://img.shields.io/travis/direct-adv-interfaces/direct-react-router.svg?style=flat
+[travis-url]: https://travis-ci.org/direct-adv-interfaces/direct-react-router
+[license-image]: http://img.shields.io/npm/l/direct-react-router.svg?style=flat
+[license-url]: LICENSE
