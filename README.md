@@ -235,7 +235,7 @@ MIT
 
 [npm-image]: https://img.shields.io/npm/v/direct-react-router.svg?style=flat
 [npm-url]: https://npmjs.org/package/direct-react-router
-[travis-image]: https://img.shields.io/travis/direct-adv-interfaces/direct-react-router.svg?style=flat
+[travis-image]: https://api.travis-ci.org/direct-adv-interfaces/direct-react-router.svg?branch=master
 [travis-url]: https://travis-ci.org/direct-adv-interfaces/direct-react-router
 [license-image]: http://img.shields.io/npm/l/direct-react-router.svg?style=flat
 [license-url]: LICENSE
