@@ -36,8 +36,22 @@ const config: RouterConfig = {
 };
 ```
 
-> При сравнении всегда `exact === true`, поэтому порядок описания роутов не важен. Если текущему URL соответствует несколько роутов, будет исключение.
+Синтакис шаблонов путей:
 
+```ts
+const config: RouterConfig = {
+    routes: {
+        EXAMPLE1: '/:foo/:bar',  // named parameters
+        EXAMPLE2: '/:foo/:bar?', // optional parameters
+        EXAMPLE3: '/:foo*',      // zero or more
+        EXAMPLE4: '/:foo+',      // one or more
+
+        // see details: https://npmjs.org/package/path-to-regexp
+    }
+};
+```
+
+> При сравнении всегда `exact === true`, поэтому порядок описания роутов не важен. Если текущему URL соответствует несколько роутов, будет исключение.
 
 ### Middleware
 
@@ -205,9 +219,9 @@ store.dispatch(changeLocation(parsed));
 
 ## подумать
 
+- [x] проверить, как ведет себя звездочка в роутах
 - [ ] проверить, что приходит в action, если адрес - url encoded
 - [ ] подумать, нужно ли кодировать hash при генерации url
-- [ ] проверить, как ведет себя звездочка в роутах
 - [ ] когда происходит отписка от событий history
 - [ ] синхронизация в обратную сторону (store => url)?
 
