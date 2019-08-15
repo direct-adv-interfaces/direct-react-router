@@ -1,6 +1,7 @@
 # direct-react-router
 
 [![NPM version][npm-image]][npm-url]
+[![Bundle size][bundlephobia-image]][bundlephobia-url]
 [![Build status][travis-image]][travis-url]
 [![License][license-image]][license-url]
 
@@ -237,7 +238,9 @@ MIT
 
 [npm-image]: https://img.shields.io/npm/v/direct-react-router.svg?style=flat
 [npm-url]: https://npmjs.org/package/direct-react-router
+[bundlephobia-image]: https://badgen.net/bundlephobia/minzip/direct-react-router
+[bundlephobia-url]: https://bundlephobia.com/result?p=direct-react-router
 [travis-image]: https://api.travis-ci.org/direct-adv-interfaces/direct-react-router.svg?branch=master
 [travis-url]: https://travis-ci.org/direct-adv-interfaces/direct-react-router
-[license-image]: http://img.shields.io/npm/l/direct-react-router.svg?style=flat
+[license-image]: https://badgen.net/github/license/direct-adv-interfaces/direct-react-router
 [license-url]: LICENSE
