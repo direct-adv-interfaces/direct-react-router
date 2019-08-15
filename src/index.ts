@@ -1,18 +1,12 @@
-export {
-    HISTORY_METHOD_CALLED,
-    LOCATION_CHANGED,
-    callHistoryMethod,
-    changeLocation,
-    HistoryMethodCalledAction,
-    LocationChangedAction
-} from './actions';
+export * from './actions';
 
-export { parseLocation, RouterConfig, RouterLocation, UNKNOWN_ROUTE } from './location';
+export * from './location';
+export * from './matchPath';
 
-export { createRoutingMiddleware } from './middleware';
+export * from './middleware';
 
-export { createRoutingReducer } from './reducer';
+export * from './reducer';
 
+export * from './components/Link';
+export * from './components/AdvancedLink';
 export { RouterContext } from './components/BaseLinkComponent';
-export { Link } from './components/Link';
-export { AdvancedLink } from './components/AdvancedLink';
