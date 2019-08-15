@@ -236,7 +236,7 @@ store.dispatch(changeLocation(routerLocation));
 
 MIT
 
-[npm-image]: https://img.shields.io/npm/v/direct-react-router.svg?style=flat
+[npm-image]: https://badgen.net/npm/v/direct-react-router
 [npm-url]: https://npmjs.org/package/direct-react-router
 [bundlephobia-image]: https://badgen.net/bundlephobia/minzip/direct-react-router
 [bundlephobia-url]: https://bundlephobia.com/result?p=direct-react-router
