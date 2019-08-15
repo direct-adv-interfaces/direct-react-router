@@ -19,7 +19,7 @@
 npm i direct-react-router
 ```
 
-Зависимости: `react ^16.8.6`, `redux ^4.0.1`, `react-redux ^7.0.0`.
+Зависимости: `react ^16.8.6`, `redux ^4.0.1`, `react-redux ^7.0.0`, `history ^4.9.0`.
 
 ## Как использовать
 
