@@ -218,6 +218,9 @@ store.dispatch(changeLocation(routerLocation));
 - [x] exact
 - [x] base path
 - [x] атрибуты ссылки
+- [ ] callHistoryMethod, который принимает RouteArgs + добавить параметр с названием методов
+- [ ] persistQuery
+- [ ] переделать базовый компонент на HOC
 - [ ] выключать spa переходы через пропсы
 - [ ] query-string options
 
@@ -227,7 +230,6 @@ store.dispatch(changeLocation(routerLocation));
 - [ ] проверить, что приходит в action, если адрес - url encoded
 - [ ] подумать, нужно ли кодировать hash при генерации url
 - [ ] когда происходит отписка от событий history
-- [ ] синхронизация в обратную сторону (store => url)?
 
 ## License
 
