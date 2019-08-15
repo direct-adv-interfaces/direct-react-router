@@ -201,8 +201,8 @@ Middleware генерирует экшены при изменении url в а
 import { parseLocation, changeLocation } from 'direct-react-router';
 // ...
 
-const routeLoaction: RouterLocation = parseLocation(config, history.location);
-store.dispatch(changeLocation(parsed));
+const routerLocation: RouterLocation = parseLocation(config, history.location);
+store.dispatch(changeLocation(routerLocation));
 ```
 
 ## todo
