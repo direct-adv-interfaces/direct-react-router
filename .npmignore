@@ -1,3 +1,6 @@
+src
 test
 .gitignore
+.travis.yml
+tsconfig.json
 package-lock.json
