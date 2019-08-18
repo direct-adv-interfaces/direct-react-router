@@ -7,7 +7,7 @@ import {
 } from 'redux';
 import { History, Location as HistoryLocation } from 'history';
 
-import { RouterConfig, parseLocation } from './location';
+import { RouterConfig, parseLocation, generateUrl } from './location';
 import {
     HistoryMethodCalledAction,
     HISTORY_METHOD_CALLED,
@@ -31,7 +31,13 @@ export const createRoutingMiddleware = (
 
                 if (action.type === HISTORY_METHOD_CALLED) {
                     const { url } = action as HistoryMethodCalledAction;
-                    history.push(url); // todo: поддержать остальные методы, кроме push
+
+                    if (typeof url === 'string') {
+                        history.push(url);
+                    } else {
+                        const generatedUrl = generateUrl(config, url);
+                        history.push(generatedUrl); // todo: поддержать остальные методы, кроме push
+                    }
                 }
 
                 return result;

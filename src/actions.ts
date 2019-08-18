@@ -1,4 +1,5 @@
 import { RouterLocation } from './location';
+import { RouteArgs } from './matchPath';
 
 export const LOCATION_CHANGED = '@@direct-react-router/LOCATION_CHANGED';
 export type LOCATION_CHANGED = typeof LOCATION_CHANGED;
@@ -13,7 +14,7 @@ export interface LocationChangedAction {
 
 export interface HistoryMethodCalledAction {
     type: HISTORY_METHOD_CALLED;
-    url: string;
+    url: string| RouteArgs;
 }
 
 export function changeLocation(
@@ -25,7 +26,7 @@ export function changeLocation(
     };
 }
 
-export function callHistoryMethod(url: string): HistoryMethodCalledAction {
+export function callHistoryMethod(url: string| RouteArgs): HistoryMethodCalledAction {
     return {
         type: HISTORY_METHOD_CALLED,
         url
