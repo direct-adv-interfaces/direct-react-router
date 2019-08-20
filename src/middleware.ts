@@ -5,7 +5,7 @@ import {
     Dispatch,
     Store
 } from 'redux';
-import { History, Location as HistoryLocation } from 'history';
+import { History, Location as HistoryLocation, Action as HistoryAction } from 'history';
 
 import { RouterConfig, parseLocation, generateUrl } from './location';
 import {
@@ -20,9 +20,9 @@ export const createRoutingMiddleware = (
 ): Middleware => {
     return (store: MiddlewareAPI<Dispatch, Store>) => {
         // todo: when to unsubscribe?
-        history.listen((location: HistoryLocation) => {
+        history.listen((location: HistoryLocation, action: HistoryAction) => {
             const parsed = parseLocation(config, location);
-            store.dispatch(changeLocation(parsed));
+            store.dispatch(changeLocation(parsed, action));
         });
 
         return (next: Dispatch) => {
@@ -30,13 +30,15 @@ export const createRoutingMiddleware = (
                 const result = next(action);
 
                 if (action.type === HISTORY_METHOD_CALLED) {
-                    const { url } = action as HistoryMethodCalledAction;
+                    const { url, replace } = action as HistoryMethodCalledAction;
+                    const href: string = typeof url === 'string'
+                        ? url
+                        : generateUrl(config, url);
 
-                    if (typeof url === 'string') {
-                        history.push(url);
+                    if (replace) {
+                        history.replace(href);
                     } else {
-                        const generatedUrl = generateUrl(config, url);
-                        history.push(generatedUrl); // todo: поддержать остальные методы, кроме push
+                        history.push(href);
                     }
                 }
 

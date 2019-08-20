@@ -1,3 +1,5 @@
+import { Action as HistoryAction } from 'history';
+
 import { RouterLocation } from './location';
 import { RouteArgs } from './matchPath';
 
@@ -10,25 +12,30 @@ export type HISTORY_METHOD_CALLED = typeof HISTORY_METHOD_CALLED;
 export interface LocationChangedAction {
     type: LOCATION_CHANGED;
     location: RouterLocation;
+    action: HistoryAction;
 }
 
 export interface HistoryMethodCalledAction {
     type: HISTORY_METHOD_CALLED;
     url: string| RouteArgs;
+    replace: boolean;
 }
 
 export function changeLocation(
-    location: RouterLocation
+    location: RouterLocation,
+    action: HistoryAction = 'PUSH'
 ): LocationChangedAction {
     return {
         type: LOCATION_CHANGED,
-        location
+        location,
+        action
     };
 }
 
-export function callHistoryMethod(url: string| RouteArgs): HistoryMethodCalledAction {
+export function callHistoryMethod(url: string| RouteArgs, replace: boolean = false): HistoryMethodCalledAction {
     return {
         type: HISTORY_METHOD_CALLED,
-        url
+        url,
+        replace
     };
 }

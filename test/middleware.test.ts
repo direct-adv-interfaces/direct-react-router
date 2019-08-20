@@ -56,4 +56,37 @@ describe('middleware', () => {
         expect(action2.location.search).is.equal('?x=1&y=2');
         expect(action2.location.hash).is.equal('#123');
     });
+
+    it('history action: push is default', () => {
+        const store = initStore({ routes: {} });
+
+        store.dispatch(callHistoryMethod('/xxx'));
+        const [action1, action2] = store.getActions();
+
+        expect(action1.type).is.equal(HISTORY_METHOD_CALLED);
+        expect(action2.type).is.equal(LOCATION_CHANGED);
+        expect(action2.action).is.equal('PUSH');
+    });
+
+    it('history action: explicit push', () => {
+        const store = initStore({ routes: {} });
+
+        store.dispatch(callHistoryMethod('/xxx', false));
+        const [action1, action2] = store.getActions();
+
+        expect(action1.type).is.equal(HISTORY_METHOD_CALLED);
+        expect(action2.type).is.equal(LOCATION_CHANGED);
+        expect(action2.action).is.equal('PUSH');
+    });
+
+    it('history action: explicit replace', () => {
+        const store = initStore({ routes: {} });
+
+        store.dispatch(callHistoryMethod('/xxx', true));
+        const [action1, action2] = store.getActions();
+
+        expect(action1.type).is.equal(HISTORY_METHOD_CALLED);
+        expect(action2.type).is.equal(LOCATION_CHANGED);
+        expect(action2.action).is.equal('REPLACE');
+    });
 });
