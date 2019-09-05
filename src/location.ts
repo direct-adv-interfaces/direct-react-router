@@ -4,7 +4,7 @@ import { parse, ParsedQuery, stringify } from 'query-string';
 import { matchPath, MatchedParams, QueryParams, RouteArgs } from './matchPath';
 import { generatePath } from './generatePath';
 
-export const UNKNOWN_ROUTE = '@@direct-react-router/UNKNOWN_ROUTE';
+export const NOT_FOUND = '@@direct-react-router/NOT_FOUND';
 
 export interface RouterConfig {
     routes: { [key: string]: string };
@@ -58,7 +58,7 @@ export function parseLocation(
             pathname,
             search,
             hash,
-            key: UNKNOWN_ROUTE,
+            key: NOT_FOUND,
             params: {},
             query,
             state
