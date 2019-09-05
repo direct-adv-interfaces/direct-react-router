@@ -57,36 +57,83 @@ describe('middleware', () => {
         expect(action2.location.hash).is.equal('#123');
     });
 
-    it('history action: push is default', () => {
-        const store = initStore({ routes: {} });
+    describe('history action', () => {
+        it('push is default', () => {
+            const store = initStore({ routes: {} });
 
-        store.dispatch(callHistoryMethod('/xxx'));
-        const [action1, action2] = store.getActions();
+            store.dispatch(callHistoryMethod('/xxx'));
+            const [ 
+                /* HISTORY_METHOD_CALLED */,
+                action2  // LOCATION_CHANGED
+            ] = store.getActions();
 
-        expect(action1.type).is.equal(HISTORY_METHOD_CALLED);
-        expect(action2.type).is.equal(LOCATION_CHANGED);
-        expect(action2.action).is.equal('PUSH');
+            expect(action2.action).is.equal('PUSH');
+        });
+
+        it('explicit push', () => {
+            const store = initStore({ routes: {} });
+
+            store.dispatch(callHistoryMethod('/xxx', { replace: false }));
+            const [ 
+                /* HISTORY_METHOD_CALLED */,
+                action2  // LOCATION_CHANGED
+            ] = store.getActions();
+
+            expect(action2.action).is.equal('PUSH');
+        });
+
+        it('explicit replace', () => {
+            const store = initStore({ routes: {} });
+
+            store.dispatch(callHistoryMethod('/xxx', { replace: true }));
+            const [ 
+                /* HISTORY_METHOD_CALLED */,
+                action2  // LOCATION_CHANGED
+            ] = store.getActions();
+
+            expect(action2.action).is.equal('REPLACE');
+        });
     });
 
-    it('history action: explicit push', () => {
-        const store = initStore({ routes: {} });
+    describe('history state', () => {
+        it('undefined by default', () => {
+            const store = initStore({ routes: { } });
 
-        store.dispatch(callHistoryMethod('/xxx', { replace: false }));
-        const [action1, action2] = store.getActions();
+            store.dispatch(callHistoryMethod('/xxx'));
+            const [ 
+                /* HISTORY_METHOD_CALLED */,
+                action2  // LOCATION_CHANGED
+            ] = store.getActions();
 
-        expect(action1.type).is.equal(HISTORY_METHOD_CALLED);
-        expect(action2.type).is.equal(LOCATION_CHANGED);
-        expect(action2.action).is.equal('PUSH');
-    });
+            expect(action2.location.state).is.undefined;
+        });
 
-    it('history action: explicit replace', () => {
-        const store = initStore({ routes: {} });
+        it('known route', () => {
+            const state = { a: 1 };
+            const store = initStore({ routes: { aaa: '/xxx' } });
 
-        store.dispatch(callHistoryMethod('/xxx', { replace: true }));
-        const [action1, action2] = store.getActions();
+            store.dispatch(callHistoryMethod('/xxx', { state }));
+            const [ 
+                /* HISTORY_METHOD_CALLED */,
+                action2  // LOCATION_CHANGED
+            ] = store.getActions();
 
-        expect(action1.type).is.equal(HISTORY_METHOD_CALLED);
-        expect(action2.type).is.equal(LOCATION_CHANGED);
-        expect(action2.action).is.equal('REPLACE');
+            expect(action2.location.key).is.eq('aaa');
+            expect(action2.location.state).is.eq(state);
+        });
+
+        it('unknown route', () => {
+            const state = { b: 2 };
+            const store = initStore({ routes: { } });
+
+            store.dispatch(callHistoryMethod('/yyy', { state }));
+            const [ 
+                /* HISTORY_METHOD_CALLED */,
+                action2  // LOCATION_CHANGED
+            ] = store.getActions();
+
+            expect(action2.location.key).is.eq(UNKNOWN_ROUTE);
+            expect(action2.location.state).is.eq(state);
+        });
     });
 });
