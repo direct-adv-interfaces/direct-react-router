@@ -8,7 +8,6 @@ export const UNKNOWN_ROUTE = '@@direct-react-router/UNKNOWN_ROUTE';
 
 export interface RouterConfig {
     routes: { [key: string]: string };
-    // todo: basePath
 }
 
 export interface RouterLocation {

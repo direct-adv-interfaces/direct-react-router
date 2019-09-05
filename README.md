@@ -219,7 +219,7 @@ store.dispatch(changeLocation(routerLocation));
 - [x] exact
 - [x] base path
 - [x] атрибуты ссылки
-- [ ] callHistoryMethod, который принимает RouteArgs + добавить параметр с названием методов
+- [x] callHistoryMethod, который принимает RouteArgs + добавить параметр с названием методов
 - [ ] persistQuery
 - [ ] переделать базовый компонент на HOC
 - [ ] выключать spa переходы через пропсы
