@@ -1,7 +1,7 @@
 import { Action as HistoryAction } from 'history';
 
 import { RouterLocation } from './location';
-import { RouteArgs } from './matchPath';
+import { RouteArgs, HistoryMethodOptions } from './matchPath';
 
 export const LOCATION_CHANGED = '@@direct-react-router/LOCATION_CHANGED';
 export type LOCATION_CHANGED = typeof LOCATION_CHANGED;
@@ -36,7 +36,7 @@ export function changeLocation(
 
 export function callHistoryMethod(
     url: string | RouteArgs,
-    options: { replace?: boolean; state?: any } = {}
+    options: HistoryMethodOptions = {}
 ): HistoryMethodCalledAction {
     const { replace = false, state} = options;
 
