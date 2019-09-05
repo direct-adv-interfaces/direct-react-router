@@ -17,11 +17,12 @@ export interface RouterLocation {
     hash: string;
     params: MatchedParams;
     query: QueryParams;
+    state: any;
 }
 
 export function parseLocation(
     { routes }: RouterConfig,
-    { pathname, search, hash }: HistoryLocation
+    { pathname, search, hash, state }: HistoryLocation
 ): RouterLocation {
     const query: ParsedQuery<string> = parse(search);
 
@@ -39,7 +40,8 @@ export function parseLocation(
                     hash,
                     key,
                     params: matched.params,
-                    query
+                    query,
+                    state
                 });
 
             return prev;
@@ -58,7 +60,8 @@ export function parseLocation(
             hash,
             key: UNKNOWN_ROUTE,
             params: {},
-            query
+            query,
+            state
         }
     );
 }
@@ -66,7 +69,7 @@ export function parseLocation(
 export function generateUrl(
     { routes }: RouterConfig,
     { routeKey, params, query, hash }: RouteArgs
-) {
+): string {
     const route = routes[routeKey];
 
     if (!route) {

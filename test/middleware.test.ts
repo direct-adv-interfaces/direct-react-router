@@ -71,7 +71,7 @@ describe('middleware', () => {
     it('history action: explicit push', () => {
         const store = initStore({ routes: {} });
 
-        store.dispatch(callHistoryMethod('/xxx', false));
+        store.dispatch(callHistoryMethod('/xxx', { replace: false }));
         const [action1, action2] = store.getActions();
 
         expect(action1.type).is.equal(HISTORY_METHOD_CALLED);
@@ -82,7 +82,7 @@ describe('middleware', () => {
     it('history action: explicit replace', () => {
         const store = initStore({ routes: {} });
 
-        store.dispatch(callHistoryMethod('/xxx', true));
+        store.dispatch(callHistoryMethod('/xxx', { replace: true }));
         const [action1, action2] = store.getActions();
 
         expect(action1.type).is.equal(HISTORY_METHOD_CALLED);
