@@ -4,7 +4,7 @@ import {
     callHistoryMethod,
     LOCATION_CHANGED,
     HISTORY_METHOD_CALLED,
-    NOT_FOUND
+    ROUTE_NOT_FOUND
 } from '../src';
 import { createMemoryHistory } from 'history';
 
@@ -51,7 +51,7 @@ describe('middleware', () => {
 
         expect(action1.type).is.equal(HISTORY_METHOD_CALLED);
         expect(action2.type).is.equal(LOCATION_CHANGED);
-        expect(action2.location.key).is.equal(NOT_FOUND);
+        expect(action2.location.key).is.equal(ROUTE_NOT_FOUND);
         expect(action2.location.pathname).is.equal('/aa/bb/cc');
         expect(action2.location.search).is.equal('?x=1&y=2');
         expect(action2.location.hash).is.equal('#123');
@@ -132,7 +132,7 @@ describe('middleware', () => {
                 action2  // LOCATION_CHANGED
             ] = store.getActions();
 
-            expect(action2.location.key).is.eq(NOT_FOUND);
+            expect(action2.location.key).is.eq(ROUTE_NOT_FOUND);
             expect(action2.location.state).is.eq(state);
         });
     });

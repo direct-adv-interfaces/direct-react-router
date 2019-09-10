@@ -2,7 +2,7 @@ import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import { createLocation } from 'history';
 
-import { parseLocation, RouterConfig, RouterLocation, NOT_FOUND } from '../src/location';
+import { parseLocation, RouterConfig, RouterLocation, ROUTE_NOT_FOUND } from '../src/location';
 
 describe('parseLocation', () => {
     it('parse route key', () => {
@@ -83,7 +83,7 @@ describe('parseLocation', () => {
 
         const result: RouterLocation = parseLocation(config, location);
 
-        expect(result.key).is.equal(NOT_FOUND);
+        expect(result.key).is.equal(ROUTE_NOT_FOUND);
         expect(result.pathname).is.equal('/asfk/jfka/jgfka');
         expect(result.search).is.equal('?aa=1');
         expect(result.hash).is.equal('#www');
