@@ -70,6 +70,23 @@ const store = createStore(rootReducer, routerMiddleware);
 
 Теперь при каждом изменении url будет генериироваться action, который вы можете обрабатывать любым нужным способом. В него приходит информация о новом URL и его параметрах + его alias в конфиге.
 
+```ts
+/*
+{
+    type: '@@direct-react-router/LOCATION_CHANGED',
+    location: {
+        key: '<route key>',
+        pathname: '...',
+        search: '...',
+        hash: '...',
+        params: { ... },
+        query: { ... }
+    },
+    action: 'PUSH'
+}
+*/
+```
+
 ### Reducer + state
 
 Вы можете подключить готовый редюсер, который будет обрабатывать события изменения URL и класть информацию в state. Также он отвечает за начальное состояние (начальный url).
@@ -156,6 +173,34 @@ location: {
 ```
 
 Внимание! проверьте, что нет [лишних перерисовок](https://ru.reactjs.org/docs/context.html#caveats)
+
+### History action & state
+
+Когда происходит action, добавляющий url в history (при клике по ссылке или при генерации вручную), по умолчанию используется действие `PUSH`. Вы можете генерировать действие `REPLACE`, указав необязательный параметр `replace` (`boolean`). Также вы можете указать необязательный параметр `state` (`any`). Значение, поля state будет передано в поле `state` экшена `LOCATION_CHANGED`.
+
+```ts
+import { callHistoryMethod, Link } from 'direct-react-router';
+// ...
+
+// генерируем экшен вручную
+store.dispatch(callHistoryMethod('/my/path', { replace: true, state: 'xxx' }))
+
+// генерируем экшен через ссылку
+render() {
+    return <Link href='/my/path' replace={true} state={'xxx'}>text</Link>;
+}
+
+/*
+{
+    type: '@@direct-react-router/LOCATION_CHANGED',
+    location: {
+        ...
+        state: 'xxx'
+    },
+    action: 'REPLACE'
+}
+*/
+```
 
 ### Base path
 
