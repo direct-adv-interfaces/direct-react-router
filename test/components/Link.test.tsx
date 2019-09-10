@@ -210,4 +210,35 @@ describe('Link', () => {
             expect(actions).is.empty;
         });
     });
+
+    describe('history options', () => {
+        it('empty values by default', () => {
+            const { link, store } = render2(<Link href="/aaa0" />);
+
+            link.simulate('click', { button: 0 });
+            const [action] = store.getActions();
+
+            expect(action.replace).is.false;
+            expect(action.state).is.undefined;
+        });
+
+        it('replace passed from props', () => {
+            const { link, store } = render2(<Link href="/aaa0" replace={true} />);
+
+            link.simulate('click', { button: 0 });
+            const [action] = store.getActions();
+
+            expect(action.replace).is.true;
+        });
+
+        it('state passed from props', () => {
+            const state = { x: 'y' };
+            const { link, store } = render2(<Link href="/aaa0" state={state} />);
+
+            link.simulate('click', { button: 0 });
+            const [action] = store.getActions();
+
+            expect(action.state).is.eq(state);
+        });
+    });
 });

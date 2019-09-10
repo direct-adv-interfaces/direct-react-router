@@ -1,12 +1,13 @@
 import { Action as HistoryAction } from 'history';
 
 import { RouterLocation } from './location';
-import { RouteArgs } from './matchPath';
+import { RouteArgs, HistoryMethodOptions } from './matchPath';
 
 export const LOCATION_CHANGED = '@@direct-react-router/LOCATION_CHANGED';
 export type LOCATION_CHANGED = typeof LOCATION_CHANGED;
 
-export const HISTORY_METHOD_CALLED = '@@direct-react-router/HISTORY_METHOD_CALLED';
+export const HISTORY_METHOD_CALLED =
+    '@@direct-react-router/HISTORY_METHOD_CALLED';
 export type HISTORY_METHOD_CALLED = typeof HISTORY_METHOD_CALLED;
 
 export interface LocationChangedAction {
@@ -17,8 +18,9 @@ export interface LocationChangedAction {
 
 export interface HistoryMethodCalledAction {
     type: HISTORY_METHOD_CALLED;
-    url: string| RouteArgs;
+    url: string | RouteArgs;
     replace: boolean;
+    state?: any;
 }
 
 export function changeLocation(
@@ -32,10 +34,16 @@ export function changeLocation(
     };
 }
 
-export function callHistoryMethod(url: string| RouteArgs, replace: boolean = false): HistoryMethodCalledAction {
+export function callHistoryMethod(
+    url: string | RouteArgs,
+    options: HistoryMethodOptions = {}
+): HistoryMethodCalledAction {
+    const { replace = false, state} = options;
+
     return {
         type: HISTORY_METHOD_CALLED,
         url,
-        replace
+        replace,
+        state
     };
 }

@@ -2,6 +2,7 @@ import React from 'react';
 
 import { callHistoryMethod, HistoryMethodCalledAction } from '../actions';
 import { RouterConfig } from '../location';
+import { HistoryMethodOptions } from '../matchPath';
 
 // helpers
 function normalizeHref(href?: string): string {
@@ -21,7 +22,7 @@ export interface RouterContextData {
 export const RouterContext = React.createContext<RouterContextData>({});
 
 // component props
-export type BaseLinkOwnProps = {
+export type BaseLinkOwnProps = HistoryMethodOptions & {
     target?: string;
     className?: string;
     attrs?: { [key: string]: string | number };
@@ -30,12 +31,12 @@ export type BaseLinkOwnProps = {
 };
 
 export interface BaseLinkDispatchProps {
-    onNavigate: (url: string) => HistoryMethodCalledAction;
+    onNavigate: (url: string, options: HistoryMethodOptions) => HistoryMethodCalledAction;
 }
 
 export const dispatchProps: BaseLinkDispatchProps = {
-    onNavigate: (href: string): HistoryMethodCalledAction =>
-        callHistoryMethod(href)
+    onNavigate: (href: string, options: HistoryMethodOptions): HistoryMethodCalledAction =>
+        callHistoryMethod(href, options)
 };
 
 export abstract class BaseLinkComponent<T> extends React.Component<
@@ -48,7 +49,7 @@ export abstract class BaseLinkComponent<T> extends React.Component<
     protected abstract getHref(): string;
 
     handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
-        const { target, onClick, onNavigate } = this.props;
+        const { target, onClick, onNavigate, replace, state } = this.props;
 
         if (onClick) {
             onClick(event);
@@ -61,7 +62,7 @@ export abstract class BaseLinkComponent<T> extends React.Component<
             !isModifiedEvent(event) // ignore clicks with modifier keys
         ) {
             event.preventDefault();
-            onNavigate(this.getHref()); // todo: memo
+            onNavigate(this.getHref(), { replace, state }); // todo: memo
         }
     };
 

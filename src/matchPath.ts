@@ -16,6 +16,11 @@ export interface Options {
     sensitive?: boolean;
 }
 
+export interface HistoryMethodOptions { 
+    replace?: boolean; 
+    state?: any 
+}
+
 export interface MatchedParams {
     [extraProps: string]: string
 }

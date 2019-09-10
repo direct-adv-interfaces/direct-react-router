@@ -30,15 +30,15 @@ export const createRoutingMiddleware = (
                 const result = next(action);
 
                 if (action.type === HISTORY_METHOD_CALLED) {
-                    const { url, replace } = action as HistoryMethodCalledAction;
+                    const { url, replace, state } = action as HistoryMethodCalledAction;
                     const href: string = typeof url === 'string'
                         ? url
                         : generateUrl(config, url);
 
                     if (replace) {
-                        history.replace(href);
+                        history.replace(href, state);
                     } else {
-                        history.push(href);
+                        history.push(href, state);
                     }
                 }
 

@@ -4,11 +4,10 @@ import { parse, ParsedQuery, stringify } from 'query-string';
 import { matchPath, MatchedParams, QueryParams, RouteArgs } from './matchPath';
 import { generatePath } from './generatePath';
 
-export const UNKNOWN_ROUTE = '@@direct-react-router/UNKNOWN_ROUTE';
+export const ROUTE_NOT_FOUND = '@@direct-react-router/ROUTE_NOT_FOUND';
 
 export interface RouterConfig {
     routes: { [key: string]: string };
-    // todo: basePath
 }
 
 export interface RouterLocation {
@@ -18,11 +17,12 @@ export interface RouterLocation {
     hash: string;
     params: MatchedParams;
     query: QueryParams;
+    state: any;
 }
 
 export function parseLocation(
     { routes }: RouterConfig,
-    { pathname, search, hash }: HistoryLocation
+    { pathname, search, hash, state }: HistoryLocation
 ): RouterLocation {
     const query: ParsedQuery<string> = parse(search);
 
@@ -40,7 +40,8 @@ export function parseLocation(
                     hash,
                     key,
                     params: matched.params,
-                    query
+                    query,
+                    state
                 });
 
             return prev;
@@ -57,9 +58,10 @@ export function parseLocation(
             pathname,
             search,
             hash,
-            key: UNKNOWN_ROUTE,
+            key: ROUTE_NOT_FOUND,
             params: {},
-            query
+            query,
+            state
         }
     );
 }
@@ -67,7 +69,7 @@ export function parseLocation(
 export function generateUrl(
     { routes }: RouterConfig,
     { routeKey, params, query, hash }: RouteArgs
-) {
+): string {
     const route = routes[routeKey];
 
     if (!route) {
