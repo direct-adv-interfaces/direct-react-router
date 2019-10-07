@@ -92,10 +92,10 @@ const store = createStore(rootReducer, routerMiddleware);
 Вы можете подключить готовый редюсер, который будет обрабатывать события изменения URL и класть информацию в state. Также он отвечает за начальное состояние (начальный url).
 
 ```ts
-import { RouterLocation, createRoutingReducer } from 'direct-react-router';
+import { RouterState, createRoutingReducer } from 'direct-react-router';
 
 export interface State {
-    location: RouterLocation;
+    location: RouterState;
     // ...
 }
 
@@ -106,7 +106,18 @@ const rootReducer = combineReducers({
     ),
     // ...
 });
+
+/*
+state: {
+    location: {
+        current: { ... },
+        previous: { ... }
+    }
+}
+*/
 ```
+
+Начальное значение поля `previous` — `undefined`.
 
 ### Ссылки
 

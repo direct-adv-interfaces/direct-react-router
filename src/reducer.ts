@@ -4,18 +4,29 @@ import { RouterConfig, RouterLocation, parseLocation } from './location';
 import { LocationChangedAction, LOCATION_CHANGED } from './actions';
 import { Reducer, Action as ReduxAction } from 'redux';
 
+export interface RouterState {
+    current: RouterLocation;
+    previous?: RouterLocation;
+}
+
 export function createRoutingReducer(
     config: RouterConfig,
     location: Location
-): Reducer<RouterLocation, ReduxAction> {
+): Reducer<RouterState, ReduxAction> {
     const initialLocation = parseLocation(config, location);
 
     return function(
-        state: RouterLocation = initialLocation,
+        state: RouterState = { current: initialLocation },
         action: ReduxAction
-    ): RouterLocation {
-        return action.type === LOCATION_CHANGED
-            ? (action as LocationChangedAction).location
-            : state;
+    ): RouterState {
+
+        if (action.type !== LOCATION_CHANGED) {
+            return state;
+        }
+
+        return {
+            current: (action as LocationChangedAction).location,
+            previous: state.current
+        };
     };
 }
