@@ -74,20 +74,18 @@ export abstract class BaseLinkComponent<T> extends React.Component<
     }
 
     render() {
-        const { attrs, children, className, dangerouslySetInnerHTML, target } = this.props;
+        const { attrs, children, className, target, dangerouslySetInnerHTML } = this.props;
         const href = this.getRenderHref();
 
+        const props:any = {
+            ...attrs,
+            href, className, target
+        };
+
+        dangerouslySetInnerHTML && (props.dangerouslySetInnerHTML = dangerouslySetInnerHTML);
+
         return (
-            <a
-                {...attrs}
-                {...{ 
-                    href, 
-                    className, 
-                    target, 
-                    dangerouslySetInnerHTML 
-                }}
-                onClick={this.handleClick}
-            >
+            <a {...props} onClick={this.handleClick}>
                 {children}
             </a>
         );
