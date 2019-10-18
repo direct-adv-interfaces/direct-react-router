@@ -70,6 +70,23 @@ const store = createStore(rootReducer, routerMiddleware);
 
 Теперь при каждом изменении url будет генериироваться action, который вы можете обрабатывать любым нужным способом. В него приходит информация о новом URL и его параметрах + его alias в конфиге.
 
+```ts
+/*
+{
+    type: '@@direct-react-router/LOCATION_CHANGED',
+    location: {
+        key: '<route key>',
+        pathname: '...',
+        search: '...',
+        hash: '...',
+        params: { ... },
+        query: { ... }
+    },
+    action: 'PUSH'
+}
+*/
+```
+
 ### Reducer + state
 
 Вы можете подключить готовый редюсер, который будет обрабатывать события изменения URL и класть информацию в state. Также он отвечает за начальное состояние (начальный url).
