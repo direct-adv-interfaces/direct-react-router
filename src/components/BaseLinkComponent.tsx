@@ -28,6 +28,7 @@ export type BaseLinkOwnProps = HistoryMethodOptions & {
     attrs?: { [key: string]: string | number };
     dangerouslySetInnerHTML?: { __html: string };
     onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+    forceReload?: boolean;
 };
 
 export interface BaseLinkDispatchProps {
@@ -49,13 +50,14 @@ export abstract class BaseLinkComponent<T> extends React.Component<
     protected abstract getHref(): string;
 
     handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
-        const { target, onClick, onNavigate, replace, state } = this.props;
+        const { target, onClick, onNavigate, replace, state, forceReload } = this.props;
 
         if (onClick) {
             onClick(event);
         }
 
         if (
+            !forceReload &&
             !event.defaultPrevented && // onClick prevented default
             event.button === 0 && // ignore everything but left clicks
             (!target || target === '_self') && // let browser handle "target=_blank" etc.

@@ -209,6 +209,15 @@ describe('Link', () => {
 
             expect(actions).is.empty;
         });
+
+        it('don\'t fire action when link has forceReload attribute', () => {
+            const { link, store } = render2(<Link href="/bbbx" forceReload={true} />);
+
+            link.simulate('click', { button: 0 });
+            const actions = store.getActions();
+
+            expect(actions).is.empty;
+        });
     });
 
     describe('history options', () => {

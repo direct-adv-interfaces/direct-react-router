@@ -18,7 +18,7 @@ export interface Options {
 
 export interface HistoryMethodOptions { 
     replace?: boolean; 
-    state?: any 
+    state?: any;
 }
 
 export interface MatchedParams {

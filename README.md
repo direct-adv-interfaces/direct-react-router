@@ -174,6 +174,14 @@ location: {
 
 Внимание! проверьте, что нет [лишних перерисовок](https://ru.reactjs.org/docs/context.html#caveats)
 
+### History options
+
+Через пропсы компонентов `Link` и `AdvancedLink` можно настраивать параметры обращения к history api:
+
+- `replace?: boolean` - использовать `REPLACE` (по умолчанию `PUSH`)
+- `state?: any` - объект состояния, ассоциированный с новой записью истории браузера
+- `forceReload?: boolean` - перезагружать страницу при переходе по ссылке
+
 ### Base path
 
 Везде работаем с относительными путями.
@@ -237,9 +245,9 @@ store.dispatch(changeLocation(routerLocation));
 - [x] base path
 - [x] атрибуты ссылки
 - [x] callHistoryMethod, который принимает RouteArgs + добавить параметр с названием методов
+- [x] выключать spa переходы через пропсы
 - [ ] persistQuery
 - [ ] переделать базовый компонент на HOC
-- [ ] выключать spa переходы через пропсы
 - [ ] query-string options
 
 ## подумать
