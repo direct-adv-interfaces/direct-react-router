@@ -65,7 +65,7 @@ import { createRoutingMiddleware } from 'direct-react-router';
 // ...
 const routerMiddleware = createRoutingMiddleware(config, history);
 // ...
-const store = createStore(rootReducer, routerMiddleware);
+const store = createStore(rootReducer, applyMiddleware(routerMiddleware));
 ```
 
 Теперь при каждом изменении url будет генериироваться action, который вы можете обрабатывать любым нужным способом. В него приходит информация о новом URL и его параметрах + его alias в конфиге.
