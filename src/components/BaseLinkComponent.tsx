@@ -27,6 +27,7 @@ export type BaseLinkOwnProps = HistoryMethodOptions & {
     className?: string;
     attrs?: { [key: string]: string | number };
     dangerouslySetInnerHTML?: { __html: string };
+    children?: React.ReactNode;
     onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
     forceReload?: boolean;
 };
