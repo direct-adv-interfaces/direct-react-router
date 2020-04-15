@@ -7,7 +7,7 @@
     "scripts": {
         "prepublishOnly": "npm run build",
         "build": "tsc",
-        "test": "mocha -r ts-node/register -r test/setup -r jsdom-global/register  test/**/*.test.ts test/**/*.test.tsx"
+        "test": "mocha -r ts-node/register -r jsdom-global/register test/**/*.test.ts test/**/*.test.tsx"
     },
     "repository": {
         "type": "git",
@@ -30,16 +30,14 @@
         "react-redux": "^7.2.0"
     },
     "devDependencies": {
+        "@testing-library/react": "^10.0.2",
         "@types/chai": "^4.2.11",
-        "@types/enzyme": "^3.10.5",
         "@types/history": "^4.7.5",
         "@types/mocha": "^7.0.2",
         "@types/react": "^16.9.34",
         "@types/react-redux": "^7.1.7",
         "@types/redux-mock-store": "^1.0.2",
         "chai": "^4.2.0",
-        "enzyme": "^3.11.0",
-        "enzyme-adapter-react-16": "^1.15.2",
         "history": "^4.10.1",
         "jsdom": "^16.2.2",
         "jsdom-global": "^3.0.2",
