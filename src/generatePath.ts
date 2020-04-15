@@ -1,4 +1,4 @@
-import pathToRegexp, { PathFunction } from 'path-to-regexp';
+import { PathFunction, compile } from 'path-to-regexp';
 import { RouteParams } from './matchPath';
 
 const cache: { [key: string]: PathFunction<object> } = {};
@@ -8,7 +8,7 @@ let cacheCount = 0;
 function compilePath(path: string): PathFunction<object> {
     if (cache[path]) return cache[path];
 
-    const generator: PathFunction<object> = pathToRegexp.compile(path);
+    const generator: PathFunction<object> = compile(path);
 
     if (cacheCount < cacheLimit) {
         cache[path] = generator;

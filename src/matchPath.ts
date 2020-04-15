@@ -1,4 +1,4 @@
-import pathToRegexp from 'path-to-regexp';
+import { pathToRegexp, Key } from 'path-to-regexp';
 
 const cacheLimit: number = 10000;
 let cacheCount: number = 0;
@@ -55,7 +55,7 @@ interface CompileOptions {
 
 interface CompiledPath {
     regexp: RegExp;
-    keys: pathToRegexp.Key[];
+    keys: Key[];
 }
 
 function compilePath(path: string, options: CompileOptions): CompiledPath {
@@ -64,7 +64,7 @@ function compilePath(path: string, options: CompileOptions): CompiledPath {
 
     if (pathCache[path]) return pathCache[path];
 
-    const keys: pathToRegexp.Key[] = [];
+    const keys: Key[] = [];
     const regexp: RegExp = pathToRegexp(path, keys, options);
     const result: CompiledPath = { regexp, keys };
 
