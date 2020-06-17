@@ -1,4 +1,5 @@
 import { pathToRegexp, Key } from 'path-to-regexp';
+import { State as HistoryState } from 'history';
 
 const cacheLimit: number = 10000;
 let cacheCount: number = 0;
@@ -18,7 +19,7 @@ export interface Options {
 
 export interface HistoryMethodOptions { 
     replace?: boolean; 
-    state?: any;
+    state?: HistoryState;
 }
 
 export interface MatchedParams {

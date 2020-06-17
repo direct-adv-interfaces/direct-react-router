@@ -96,7 +96,7 @@ describe('middleware', () => {
     });
 
     describe('history state', () => {
-        it('undefined by default', () => {
+        it('null by default', () => {
             const store = initStore({ routes: { } });
 
             store.dispatch(callHistoryMethod('/xxx'));
@@ -105,7 +105,7 @@ describe('middleware', () => {
                 action2  // LOCATION_CHANGED
             ] = store.getActions();
 
-            expect(action2.location.state).is.undefined;
+            expect(action2.location.state).is.null;
         });
 
         it('known route', () => {

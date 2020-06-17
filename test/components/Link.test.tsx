@@ -252,7 +252,7 @@ describe('Link', () => {
             const [action] = store.getActions();
 
             expect(action.replace).is.false;
-            expect(action.state).is.undefined;
+            expect(action.state).is.null;
         });
 
         it('replace passed from props', () => {

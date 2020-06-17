@@ -5,7 +5,7 @@ import {
     Dispatch,
     Store
 } from 'redux';
-import { History, Location as HistoryLocation, Action as HistoryAction } from 'history';
+import { History } from 'history';
 
 import { RouterConfig, parseLocation, generateUrl } from './location';
 import {
@@ -20,7 +20,7 @@ export const createRoutingMiddleware = (
 ): Middleware => {
     return (store: MiddlewareAPI<Dispatch, Store>) => {
         // todo: when to unsubscribe?
-        history.listen((location: HistoryLocation, action: HistoryAction) => {
+        history.listen(({ action, location }) => {
             const parsed = parseLocation(config, location);
             store.dispatch(changeLocation(parsed, action));
         });
