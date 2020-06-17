@@ -1,4 +1,4 @@
-import { Location as HistoryLocation } from 'history';
+import { Location as HistoryLocation, State as HistoryState } from 'history';
 import { parse, ParsedQuery, stringify } from 'query-string';
 
 import { matchPath, MatchedParams, QueryParams, RouteArgs } from './matchPath';
@@ -17,7 +17,7 @@ export interface RouterLocation {
     hash: string;
     params: MatchedParams;
     query: QueryParams;
-    state: any;
+    state: HistoryState;
 }
 
 export function parseLocation(
